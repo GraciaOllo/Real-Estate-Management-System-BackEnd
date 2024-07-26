@@ -6,21 +6,24 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
 
 @Entity
-@Table(name = "tenant")
+@Table(name="agent")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class Tenant extends Users {
+public class Agent extends Users {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int  tenant_id;
-    private boolean payRent;
+    private int agentid;
+    private Date workdate;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private Users user;
+
+
 }

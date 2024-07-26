@@ -26,8 +26,9 @@ public class PropertyService {
         return propertyRepository.findById(property_id).orElse(null);
     }
 
-    public void saveProperty(Property property) {
+    public Property saveProperty(Property property) {
         propertyRepository.save(property);
+        return property;
     }
 
     public void deleteProperty(Integer property_id) {

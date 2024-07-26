@@ -7,27 +7,28 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
 
     @Autowired
     private UserRepository userRepository;
-@Bean
-    public List<Users> getAllUsers(){
+    @Bean
+    public List<Users> getAllUsers() {
         return userRepository.findAll();
     }
 
-    public Users getUserById(Integer id){
+    public Users saveUser(Users user) {
+        return userRepository.save(user);
+    }
+
+    public Users    getUserById(Integer id) {
         return userRepository.findById(id).orElse(null);
     }
 
-    public void saveUser(Users user){
-         userRepository.save(user);
-    }
-    public void deleteUser(Integer id){
+    public void deleteUser(Integer id) {
         userRepository.deleteById(id);
     }
-
-
 }
+

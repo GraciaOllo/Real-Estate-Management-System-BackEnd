@@ -2,16 +2,17 @@ package com.example.demo.controller;
 
 
 import com.example.demo.model.Users;
+import com.example.demo.service.AuthService;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
-
+@RequestMapping("/auth")
 public class UserController {
-
     @Autowired
     private UserService userService;
 
@@ -29,13 +30,13 @@ public class UserController {
 
     @PostMapping("/saveUser")
     public void createUser(@RequestBody Users user) {
-         userService.saveUser(user);
+        userService.saveUser(user);
     }
 
     @DeleteMapping("/deleteUser/{id}")
     public void deleteUser(@PathVariable Integer id) {
         userService.deleteUser(id);
     }
-
-
 }
+
+
