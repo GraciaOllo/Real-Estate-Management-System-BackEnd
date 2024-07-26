@@ -27,6 +27,16 @@ public class PropertyController {
     public void createProperty(@RequestBody Property property) {
         propertyService.saveProperty(property);
     }
+    @PutMapping("/updateProperty/{property_id}")
+    public Property updateProperty(@PathVariable Integer property_id, @RequestBody Property property) {
+        Property existingProperty = propertyService.getPropertyById(property_id);
+        if (existingProperty != null) {
+            existingProperty.setType(property.getType());
+            existingProperty.setLocation(property.getLocation());
+            return propertyService.saveProperty(existingProperty);
+        }
+        return null;
+    }
 
     @DeleteMapping("/deleteProperty/{property_id}")
     public void deleteProperty(@PathVariable Integer property_id) {
