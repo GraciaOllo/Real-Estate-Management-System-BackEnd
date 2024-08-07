@@ -8,9 +8,7 @@ import java.util.Objects;
 @MappedSuperclass
 
 public  class Users {
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    private int id;
+
     private String name;
     private String email;
     private String password; // Make sure to hash this

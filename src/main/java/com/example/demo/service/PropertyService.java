@@ -14,11 +14,7 @@ public class PropertyService {
     @Autowired
     private  PropertyRepository propertyRepository;
 
-    public PropertyService(PropertyRepository propertyRepository) {
-        this.propertyRepository = propertyRepository;
-    }
 
-    @Bean
     public  List<Property> getAllProperties() {return propertyRepository.findAll();
     }
 

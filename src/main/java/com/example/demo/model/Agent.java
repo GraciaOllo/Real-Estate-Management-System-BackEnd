@@ -21,9 +21,9 @@ public class Agent extends Users {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int agentid;
     private Date workdate;
-//    @ManyToOne
-//    @JoinColumn(name = "user_id")
-//    private Users user;
+//    @OneToMany
+//    @JoinColumn(name = "Fk_agentid")
+//    private Property property;
 
 
 }

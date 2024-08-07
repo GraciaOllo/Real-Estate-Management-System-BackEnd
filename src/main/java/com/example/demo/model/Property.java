@@ -42,6 +42,12 @@ public class Property {
     private int price;
     private String type,picture,location;
     private Statues statues;
+    @JoinColumn(name = "FK_tenant_id")
+    @ManyToOne(cascade= CascadeType.ALL)
+
+
+    Tenant tenant;
+
 
 
 }

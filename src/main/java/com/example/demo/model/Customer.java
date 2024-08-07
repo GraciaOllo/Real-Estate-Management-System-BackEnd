@@ -6,21 +6,19 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
 @Entity
-@Table(name = "tenant")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-
-public class Tenant extends Users {
-
+public class Customer  extends  Users{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int  tenant_id;
-    private boolean payRent;
+    private int customerId;
+    private String address;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "FK_adminId")
 
-
+    Admin admin;
 }
