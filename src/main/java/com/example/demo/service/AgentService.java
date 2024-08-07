@@ -20,11 +20,21 @@ public class AgentService {
         return agentRepository.save(agent);
     }
 
-    public Agent findAgentById(Integer id) {
+    public Agent findAgentById(Long id) {
         return agentRepository.findById(id).orElse(null);
     }
 
-    public void deleteAgent(Integer id) {
-        agentRepository.deleteById(id);
+    public Agent updateAgent(Long id, Agent agentDetails) {
+        Agent agent = agentRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Agent not found"));
+        agent.setFirstName(agentDetails.getFirstName());
+        agent.setLastName(agentDetails.getLastName());
+        agent.setEmail(agentDetails.getEmail());
+        agent.setPhoneNumber(agentDetails.getPhoneNumber());
+        return agentRepository.save(agent);
+    }
+
+    public void deleteAgent(Long id) {
+        Agent agent = agentRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Agent not found"));
+        agentRepository.delete(agent);
     }
 }

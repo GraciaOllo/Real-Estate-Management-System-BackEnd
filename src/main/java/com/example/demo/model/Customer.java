@@ -1,13 +1,15 @@
 package com.example.demo.model;
 
-
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.Data;
 
 
 @Data
 @Entity
-public class Agent {
+public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -16,7 +18,4 @@ public class Agent {
     private String lastName;
     private String email;
     private String phoneNumber;
-
-    @OneToOne
-    private Users userAccount; // Link to User for authentication
 }

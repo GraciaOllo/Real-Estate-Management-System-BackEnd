@@ -1,33 +1,47 @@
 package com.example.demo.service;
 
-import com.example.demo.model.Tenant;
+import com.example.demo.model.Admin;
 import com.example.demo.model.Users;
-import com.example.demo.repository.TenantRepository;
+import com.example.demo.repository.AdminRepository;
 import com.example.demo.repository.UserRepository;
+import com.example.demo.Security.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class AuthService {
+
     @Autowired
-    private TenantRepository tenantRepository;
+    private UserRepository userRepository;
+    private AdminRepository adminRepository;
 
-    public Optional<Tenant> login(String email, String password) {
-        Optional<Tenant> tenant = tenantRepository.findByEmail(email);
-        if (tenant.isPresent() && tenant.get().login(email, password)) {
-            return tenant;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private JwtUtil jwtUtil;
+
+    public Users registerUser(Users user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        return userRepository.save(user);
+    }
+
+    public Admin registerAdmin(Admin admin) {
+        admin.setPassword(passwordEncoder.encode(admin.getPassword()));
+        return adminRepository.save(admin);
+    }
+
+    public String authenticateUser(String username, String password) {
+        Users user = userRepository.findByUsername(username);
+//                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        if (passwordEncoder.matches(password, user.getPassword())) {
+            return jwtUtil.generateToken(user);
+        } else {
+            throw new RuntimeException("Invalid credentials");
         }
-        return Optional.empty();
     }
 
-    public void logout(Users user) {
-        user.logout();
-    }
-
-    public boolean verifyLogin(Users user) {
-        return user.verifyLogin();
-    }
 
 }

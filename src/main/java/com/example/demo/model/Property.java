@@ -1,47 +1,69 @@
 package com.example.demo.model;
 
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Setter
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.math.BigDecimal;
+import java.util.List;
+
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 @Entity
-@Table(name="property")
-
 public class Property {
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public enum Statues {
-        SOLD,
-        OCCUPIED,
-        FREE
-    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int property_id;
-    private int price;
-    private String type,picture,location;
-    private Statues statues;
+    private Long id;
+
+    private String name;
+    private String location;
+    private BigDecimal price;
+    private String type;
+
+    private String imageUrl; // URL of the property image
+
+    @ManyToOne
+    private Agent agent;
+
+    @OneToOne
+    private Customer owner;
 
 
+    public void setStatus(PropertyStatus propertyStatus) {
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public Customer getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Customer owner) {
+        this.owner = owner;
+    }
+
+    public PropertyStatus getStatus() {
+        return status;
+    }
+
+
+    public enum PropertyStatus {
+        FREE,
+        SOLD,
+        RENTED
+    }
+    @Enumerated(EnumType.STRING)
+    private PropertyStatus status = PropertyStatus.FREE; // Default status is FREE
+
+    @OneToMany(mappedBy = "property", cascade = CascadeType.ALL)
+    private List<Complaint> complaints;
 }

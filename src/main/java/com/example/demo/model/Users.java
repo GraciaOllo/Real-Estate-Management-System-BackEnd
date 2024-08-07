@@ -1,38 +1,37 @@
 package com.example.demo.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import lombok.*;
 
-import jakarta.persistence.*;
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+public class Users {
 
-import java.util.Objects;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-@MappedSuperclass
+    private String username;
+    private String password;
+    private String role; // "ADMIN", "AGENT", "TENANT", "CUSTOMER"
 
-public  class Users {
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    private int id;
-    private String name;
-    private String email;
-    private String password; // Make sure to hash this
+    // Custom methods can be added if needed
 
-    @Transient
-    private boolean loggedIn;
-
-    // Getters and Setters
-
-    public boolean login(String email, String password) {
-        if (Objects.equals(this.email, email) && Objects.equals(this.password, password)) {
-            this.loggedIn = true;
-            return true;
-        }
-        return false;
+    public Users(String username, String password, String role) {
+        this.username = username;
+        this.password = password;
+        this.role = role;
     }
 
-    public void logout() {
-        this.loggedIn = false;
+    public Users orElseThrow(Object userNotFound) {
+        return null;
     }
 
-    public boolean verifyLogin() {
-        return this.loggedIn;
-    }
+
+    // Other methods are handled by Lombok (@Data generates getters, setters, toString, equals, and hashcode)
 }

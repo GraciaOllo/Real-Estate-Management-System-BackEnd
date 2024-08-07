@@ -1,23 +1,43 @@
 package com.example.demo.model;
 
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Entity
-@Table(name="admin")
+import jakarta.persistence.*;
+import lombok.*;
+
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-public class Admin extends Users  {
+@AllArgsConstructor
+@Data
+@Entity
+public class Admin {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int adminid;
-private String address;
+    private Long id;
+    private String email;
+    private String username;
+    private String password;
+
+    @Column(nullable = false)
+    private String role = "ADMIN";  // Default role as ADMIN
 
 
+    public String getUsername() {
+        return username;
+    }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setUserAccount(Users user) {
+    }
 }
