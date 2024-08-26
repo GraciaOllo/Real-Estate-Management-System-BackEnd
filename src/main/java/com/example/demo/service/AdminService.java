@@ -8,21 +8,20 @@ import com.example.demo.repository.AdminRepository;
 import com.example.demo.repository.AgentRepository;
 import com.example.demo.repository.TenantRepository;
 import com.example.demo.repository.UserRepository;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AdminService {
-@Autowired
+
     private final AdminRepository adminRepository;
     private final AgentRepository agentRepository;
     private final TenantRepository tenantRepository;
     private final UserRepository userRepository;
-    private final
-    PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
+    @Autowired
     public AdminService(AdminRepository adminRepository, AgentRepository agentRepository, TenantRepository tenantRepository,
                         UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.adminRepository = adminRepository;
@@ -32,14 +31,12 @@ public class AdminService {
         this.passwordEncoder = passwordEncoder;
     }
 
-
     public Admin createAdmin(Admin admin) {
         Users user = new Users();
         user.setUsername(admin.getEmail());
         user.setPassword(passwordEncoder.encode("defaultPassword")); // Default password should be changed later
         user.setRole("ADMIN");
         userRepository.save(user);
-
         admin.setUserAccount(user);
         return adminRepository.save(admin);
     }
@@ -47,7 +44,7 @@ public class AdminService {
     public Agent createAgent(Agent agent) {
         Users user = new Users();
         user.setUsername(agent.getEmail());
-       user.setPassword(passwordEncoder.encode("defaultPassword")); // Default password should be changed later
+        user.setPassword(passwordEncoder.encode("defaultPassword")); // Default password should be changed later
         user.setRole("AGENT");
         userRepository.save(user);
 
@@ -58,7 +55,7 @@ public class AdminService {
     public Tenant createTenant(Tenant tenant) {
         Users user = new Users();
         user.setUsername(tenant.getEmail());
-       user.setPassword(passwordEncoder.encode("defaultPassword")); // Default password should be changed later
+        user.setPassword(passwordEncoder.encode("defaultPassword")); // Default password should be changed later
         user.setRole("TENANT");
         userRepository.save(user);
 

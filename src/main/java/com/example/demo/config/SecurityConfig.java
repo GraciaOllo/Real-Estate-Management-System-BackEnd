@@ -3,6 +3,8 @@ package com.example.demo.config;
 import com.example.demo.service.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -25,8 +27,8 @@ public class SecurityConfig {
         http
                 .csrf().disable()
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/api/auth/**", "/api/admin/**", "/images/**").permitAll()
-                        .requestMatchers("/api/properties/**", "/api/complaints/**").hasAnyRole("ADMIN", "AGENT", "TENANT")
+                        .requestMatchers("/api/auth/login", "/api/auth/login/admin","/api/auth/register/admin", "/api/auth/register/**", "/images/**","api/admin/tenants","api/admin/agents", "/api/properties/create-property").permitAll()
+                        .requestMatchers("/api/properties/**", "/api/properties/create-property","/api/complaints/**").hasAnyRole("ADMIN", "AGENT", "TENANT")
                         .anyRequest().authenticated()
                 )
                 .userDetailsService(userDetailsService)
@@ -34,6 +36,16 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 );
         return http.build();
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
+        AuthenticationManagerBuilder authenticationManagerBuilder =
+                http.getSharedObject(AuthenticationManagerBuilder.class);
+        authenticationManagerBuilder
+                .userDetailsService(userDetailsService)
+                .passwordEncoder(passwordEncoder());
+        return authenticationManagerBuilder.build();
     }
 
     @Bean

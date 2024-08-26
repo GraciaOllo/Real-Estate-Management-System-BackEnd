@@ -22,7 +22,7 @@ public class AdminController {
     }
 
 
-    @PostMapping("/admin")
+    @PostMapping("/create-admin")
     public ResponseEntity<Admin> createAdmin(@RequestBody Admin admin) {
         return ResponseEntity.ok(adminService.createAdmin(admin));
     }

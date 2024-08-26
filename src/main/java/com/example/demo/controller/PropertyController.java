@@ -22,14 +22,15 @@ public class PropertyController {
     private PropertyService propertyService;
 
     @GetMapping("/")
-//    @PreAuthorize("hasAnyRole('ADMIN', 'AGENT', 'TENANT')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'AGENT', 'TENANT')")
     public ResponseEntity<List<Property>> getAllProperties() {
         return ResponseEntity.ok(propertyService.getAllProperties());
     }
 
-    @PostMapping("/")
-//    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/create-property")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Property> createProperty(@RequestBody Property property) {
+
         return ResponseEntity.ok(propertyService.createProperty(property));
     }
 

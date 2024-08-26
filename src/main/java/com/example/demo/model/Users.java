@@ -28,9 +28,7 @@ public class Users {
         this.role = role;
     }
 
-    public Users orElseThrow(Object userNotFound) {
-        return null;
-    }
+
 
 
     // Other methods are handled by Lombok (@Data generates getters, setters, toString, equals, and hashcode)
