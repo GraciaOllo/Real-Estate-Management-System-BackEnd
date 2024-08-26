@@ -14,12 +14,17 @@ public class Admin {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String email;
+
     private String username;
     private String password;
 
     @Column(nullable = false)
     private String role = "ADMIN";  // Default role as ADMIN
+
+    public Admin(String username, String password, String admin) {
+    }
 
 
     public String getUsername() {
@@ -39,5 +44,9 @@ public class Admin {
     }
 
     public void setUserAccount(Users user) {
+    }
+
+    public Admin orElseThrow(Object adminNotFound) {
+        return null;
     }
 }
