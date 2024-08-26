@@ -27,9 +27,11 @@ public class SecurityConfig {
         http
                 .csrf().disable()
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/api/auth/login", "/api/auth/login/admin","/api/auth/register/admin", "/api/auth/register/**", "/images/**","api/admin/tenants","api/admin/agents", "/api/properties/create-property").permitAll()
-                        .requestMatchers("/api/properties/**", "/api/properties/create-property","/api/complaints/**").hasAnyRole("ADMIN", "AGENT", "TENANT")
-                        .anyRequest().authenticated()
+                        .requestMatchers( "/**","/api/auth/login", "/api/auth/login/admin","/api/auth/register/admin", "/api/auth/register/**", "/images/**","api/admin/tenants","api/admin/agents", "/api/properties/create-property","/api/properties/**").permitAll()
+//                        .requestMatchers("/api/properties/**", "/api/properties/create-property","/api/complaints/**").hasAnyRole("ADMIN", "AGENT", "TENANT")
+                        .requestMatchers("/api/properties/**", "/api/properties/create-property","/api/complaints/**").permitAll()
+
+                                .anyRequest().permitAll()
                 )
                 .userDetailsService(userDetailsService)
                 .sessionManagement(session -> session

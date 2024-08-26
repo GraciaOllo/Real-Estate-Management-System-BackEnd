@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
 
+//@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/properties")
 public class PropertyController {
@@ -22,13 +23,13 @@ public class PropertyController {
     private PropertyService propertyService;
 
     @GetMapping("/")
-    @PreAuthorize("hasAnyRole('ADMIN', 'AGENT', 'TENANT')")
+//    @PreAuthorize("hasAnyRole('ADMIN', 'AGENT', 'TENANT')")
     public ResponseEntity<List<Property>> getAllProperties() {
         return ResponseEntity.ok(propertyService.getAllProperties());
     }
 
     @PostMapping("/create-property")
-    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Property> createProperty(@RequestBody Property property) {
 
         return ResponseEntity.ok(propertyService.createProperty(property));
