@@ -66,28 +66,28 @@ public class AuthController {
 //     User Login (General Users and Admin)
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Users user) {
-        System.out.println(user.getUsername() + user.getPassword());
-        String jwtToken = authService.authenticateUser(user.getUsername(), user.getPassword());
+        System.out.println(user.getEmail() + user.getPassword());
+        String jwtToken = authService.authenticateUser(user.getEmail(), user.getPassword());
 //        return ResponseEntity.ok(new com.example.demo.security.JwtResponse(jwtToken));
         return ResponseEntity.ok(jwtToken);
     }
-    @PostMapping("/login/tenant")
-    public ResponseEntity<?> login(@RequestBody Tenant tenant) {
-        String jwtToken = authService.authenticateTenant(tenant.getFirstName(), tenant.getPassword());
-        return ResponseEntity.ok(new com.example.demo.security.JwtResponse(jwtToken));
-    }
+//    @PostMapping("/login/tenant")
+//    public ResponseEntity<?> login(@RequestBody Tenant tenant) {
+//        String jwtToken = authService.authenticateTenant(tenant.getFirstName(), tenant.getPassword());
+//        return ResponseEntity.ok(new com.example.demo.security.JwtResponse(jwtToken));
+//    }
 
 
     // Admin Login (Optional, if you want separate login for Admins)
-    @PostMapping("/login/admin")
-    public ResponseEntity<?> loginAdmin(@RequestBody Admin admin) {
-        // Authenticate Admin and generate JWT token
-        String jwtToken = authService.authenticateAdmin(admin.getUsername(), admin.getPassword());
-        System.out.println( jwtToken);
-        System.out.println( admin.getUsername());
-        System.out.println( admin.getPassword());
-
-        return ResponseEntity.ok(new com.example.demo.security.JwtResponse(jwtToken));
-
-    }
+//    @PostMapping("/login/admin")
+//    public ResponseEntity<?> loginAdmin(@RequestBody Admin admin) {
+//        // Authenticate Admin and generate JWT token
+//        String jwtToken = authService.authenticateAdmin(admin.getUsername(), admin.getPassword());
+//        System.out.println( jwtToken);
+//        System.out.println( admin.getUsername());
+//        System.out.println( admin.getPassword());
+//
+//        return ResponseEntity.ok(new com.example.demo.security.JwtResponse(jwtToken));
+//
+//    }
 }

@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,6 +17,9 @@ public class Users {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true) // Making the email field unique
+    private String email;
+
     private String username;
     private String password;
     private String role; // "ADMIN", "AGENT", "TENANT", "CUSTOMER"
@@ -29,7 +33,4 @@ public class Users {
     }
 
 
-
-
-    // Other methods are handled by Lombok (@Data generates getters, setters, toString, equals, and hashcode)
 }
