@@ -66,8 +66,10 @@ public class AuthController {
 //     User Login (General Users and Admin)
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Users user) {
+        System.out.println(user.getUsername() + user.getPassword());
         String jwtToken = authService.authenticateUser(user.getUsername(), user.getPassword());
-        return ResponseEntity.ok(new com.example.demo.security.JwtResponse(jwtToken));
+//        return ResponseEntity.ok(new com.example.demo.security.JwtResponse(jwtToken));
+        return ResponseEntity.ok(jwtToken);
     }
     @PostMapping("/login/tenant")
     public ResponseEntity<?> login(@RequestBody Tenant tenant) {

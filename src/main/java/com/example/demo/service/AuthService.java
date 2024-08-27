@@ -75,7 +75,10 @@ public class AuthService {
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
         Admin admin = adminRepository.findByUsername(username);
+
+//        Users u = userRepository.findByUsername(username);
         return jwtUtil.generateToken(admin);
+//            return u.getUsername();
     }
 
     public void registerTenant(Tenant tenant) {
