@@ -23,7 +23,7 @@ import java.util.Optional;
         }
 
         @PostMapping
-        public ResponseEntity<Booking> createTenant(@RequestBody Booking booking) {
+        public ResponseEntity<Booking> createBooking(@RequestBody Booking booking) {
             return ResponseEntity.ok(bookingService.createBooking(booking));
         }
 
@@ -35,11 +35,11 @@ import java.util.Optional;
 
         @GetMapping("/{id}")
         public ResponseEntity<Optional<Booking>> getBookingById(@PathVariable Long id) {
-            return ResponseEntity.ok(bookingService.getBookingById(id));
+            return ResponseEntity.ok(bookingService.getBookingById( id));
         }
 
-        @GetMapping
-        public ResponseEntity<List<Booking>> getAllTenants() {
+        @GetMapping("/getAllBookings")
+        public ResponseEntity<List<Booking>> getAllBookings() {
             return ResponseEntity.ok(bookingService.getAllBookings());
         }
 

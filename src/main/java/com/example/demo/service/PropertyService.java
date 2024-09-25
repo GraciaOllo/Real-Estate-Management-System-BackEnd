@@ -16,7 +16,7 @@ import java.util.UUID;
 
 @Service
 public class PropertyService {
-@Autowired
+    @Autowired
     private  PropertyRepository propertyRepository;
 
     public PropertyService(PropertyRepository propertyRepository) {
@@ -28,7 +28,6 @@ public class PropertyService {
 
     public Property updateProperty(Long id, Property propertyDetails) {
         Property property = propertyRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Property not found"));
-        property.setName(propertyDetails.getName());
         property.setLocation(propertyDetails.getLocation());
         property.setPrice(propertyDetails.getPrice());
         property.setType(propertyDetails.getType());
@@ -102,6 +101,6 @@ public class PropertyService {
 
     public List<Property> getAllProperties() {
 
-        return List.of();
+        return propertyRepository.findAll();
     }
 }

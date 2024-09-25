@@ -32,8 +32,7 @@ public class TenantService {
 
     public Tenant updateTenant(Long id, Tenant tenantDetails) {
         Tenant tenant = tenantRepository.findById(Math.toIntExact(id)).orElseThrow(() -> new IllegalArgumentException("Tenant not found"));
-        tenant.setFirstName(tenantDetails.getFirstName());
-        tenant.setLastName(tenantDetails.getLastName());
+        tenant.setUserName(tenantDetails.getUserName());
         tenant.setEmail(tenantDetails.getEmail());
         tenant.setPhoneNumber(tenantDetails.getPhoneNumber());
         return tenantRepository.save(tenant);
@@ -60,7 +59,7 @@ public class TenantService {
         payment.setAmount(amount);
         payment.setPaymentDate(LocalDateTime.now());
         payment.setBooking(null); // Not associated with a booking, just rent payment
-        payment.setDescription("Rent payment for property: " + property.getName());
+        payment.setDescription("Rent payment for property: " + property.getType());
 
         return paymentRepository.save(payment);
     }

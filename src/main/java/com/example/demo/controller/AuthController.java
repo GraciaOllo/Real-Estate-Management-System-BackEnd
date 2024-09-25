@@ -73,21 +73,21 @@ public class AuthController {
     }
 //    @PostMapping("/login/tenant")
 //    public ResponseEntity<?> login(@RequestBody Tenant tenant) {
-//        String jwtToken = authService.authenticateTenant(tenant.getFirstName(), tenant.getPassword());
+//        String jwtToken = authService.authenticateTenant(tenant.getEmail(), tenant.getPassword());
 //        return ResponseEntity.ok(new com.example.demo.security.JwtResponse(jwtToken));
 //    }
 
 
     // Admin Login (Optional, if you want separate login for Admins)
-//    @PostMapping("/login/admin")
-//    public ResponseEntity<?> loginAdmin(@RequestBody Admin admin) {
-//        // Authenticate Admin and generate JWT token
-//        String jwtToken = authService.authenticateAdmin(admin.getUsername(), admin.getPassword());
-//        System.out.println( jwtToken);
-//        System.out.println( admin.getUsername());
-//        System.out.println( admin.getPassword());
-//
-//        return ResponseEntity.ok(new com.example.demo.security.JwtResponse(jwtToken));
-//
-//    }
+    @PostMapping("/login/admin")
+    public ResponseEntity<?> loginAdmin(@RequestBody Admin admin) {
+        // Authenticate Admin and generate JWT token
+        String jwtToken = authService.authenticateAdmin(admin.getEmail(), admin.getPassword());
+        System.out.println( jwtToken);
+        System.out.println( admin.getUsername());
+        System.out.println( admin.getPassword());
+
+        return ResponseEntity.ok(new com.example.demo.security.JwtResponse(jwtToken));
+
+    }
 }

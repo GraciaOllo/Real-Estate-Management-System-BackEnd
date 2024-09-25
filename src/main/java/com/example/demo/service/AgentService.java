@@ -26,8 +26,8 @@ public class AgentService {
 
     public Agent updateAgent(Long id, Agent agentDetails) {
         Agent agent = agentRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Agent not found"));
-        agent.setFirstName(agentDetails.getFirstName());
-        agent.setLastName(agentDetails.getLastName());
+
+        agent.setUserName(agentDetails.getUserName());
         agent.setEmail(agentDetails.getEmail());
         agent.setPhoneNumber(agentDetails.getPhoneNumber());
         return agentRepository.save(agent);

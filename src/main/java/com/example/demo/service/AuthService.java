@@ -18,6 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AuthService {
@@ -54,19 +55,19 @@ public class AuthService {
 
 
     // Authenticate Admin
-//    public String authenticateAdmin(String username, String password) {
-//        // Authenticate Admin using AuthenticationManager
-//        Authentication authentication = authenticationManager.authenticate(
-//                new UsernamePasswordAuthenticationToken(username, password)
-//        );
-//        SecurityContextHolder.getContext().setAuthentication(authentication);
-//
-//        // Fetch the authenticated Admin entity
-//        Admin admin = adminRepository.findByUsername(username);
-//
-//        // Generate JWT token with the role included
-//        return jwtUtil.generateToken(new Admin(admin.getUsername(), admin.getPassword(), "ADMIN"));
-//    }
+    public String authenticateAdmin(String email, String password) {
+        // Authenticate Admin using AuthenticationManager
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(email, password)
+        );
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        // Fetch the authenticated Admin entity
+        Admin admin = adminRepository.findByEmail(email);
+
+        // Generate JWT token with the role included
+        return jwtUtil.generateToken(new Users(admin.getEmail(), admin.getPassword(), "ADMIN"));
+    }
 
 
     public String authenticateUser(String email, String password) {
@@ -74,29 +75,30 @@ public class AuthService {
                 new UsernamePasswordAuthenticationToken(email, password)
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        Users user = userRepository.findByEmail(email);
 
-//        Users u = userRepository.findByUsername(username);
-        return jwtUtil.generateToken(user);
-//            return u.getUsername();
+        // Fetch the authenticated User entity
+        Users user = userRepository.findByEmail(email);
+        String token = jwtUtil.generateToken(new Users(user.getEmail(), user.getPassword(), "TENANT"));
+
+        return token;
     }
 
     public void registerTenant(Tenant tenant) {
         tenant.setPassword(passwordEncoder.encode(tenant.getPassword()));
         tenantRepository.save(tenant);
     }
-//    public String authenticateTenant(String firstname, String password) {
+//    public String authenticateTenant(String username, String password) {
 //        // Authenticate Tenant using AuthenticationManager
 //        Authentication authentication = authenticationManager.authenticate(
-//                new UsernamePasswordAuthenticationToken(firstname, password)
+//                new UsernamePasswordAuthenticationToken(username, password)
 //        );
 //        SecurityContextHolder.getContext().setAuthentication(authentication);
 //
 //        // Fetch the authenticated Tenant entity
-//        Tenant tenant = tenantRepository.findByFirstName(firstname);
+//        Optional<Tenant> tenant = tenantRepository.findByUserName(username);
 //
 //        // Generate JWT token with the role included
-//        return jwtUtil.generateToken(new Admin(tenant.getFirstName(), tenant.getPassword(), "ADMIN"));
+//        return jwtUtil.generateToken(new Users (tenant.getUserName(), tenant.getPassword(), "ADMIN"));
 //    }
 
     public void registerAgent(Agent agent) {

@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 import com.example.demo.model.Customer;
 import com.example.demo.model.Property;
-import com.example.demo.model.Tenant;
 import com.example.demo.service.PropertyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +13,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
 
-//@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/properties")
 public class PropertyController {
@@ -22,10 +21,10 @@ public class PropertyController {
     @Autowired
     private PropertyService propertyService;
 
-    @GetMapping("/")
+    @GetMapping("/getAllProperties")
 //    @PreAuthorize("hasAnyRole('ADMIN', 'AGENT', 'TENANT')")
-    public ResponseEntity<List<Property>> getAllProperties() {
-        return ResponseEntity.ok(propertyService.getAllProperties());
+    public List<Property> getAllProperties() {
+        return propertyService.getAllProperties();
     }
 
     @PostMapping("/create-property")
@@ -77,7 +76,7 @@ public class PropertyController {
     @PostMapping("/{id}/uploadImage")
     public ResponseEntity<Property> uploadPropertyImage(@PathVariable Long id, @RequestParam("file") MultipartFile file) {
         try {
-           return ResponseEntity.ok(propertyService.uploadPropertyImage(id, file));
+            return ResponseEntity.ok(propertyService.uploadPropertyImage(id, file));
         } catch (IOException e) {
             return ResponseEntity.status(500).body(null);
         }

@@ -35,9 +35,7 @@ public class BookingService {
         bookingRepository.delete(booking);
     }
 
-    public Booking getBookingtById(Long id) {
-        return bookingRepository.findById((long) Math.toIntExact(id)).orElseThrow(() -> new IllegalArgumentException("Tenant not found"));
-    }
+
 
     public List<Booking> getAllBookings() {
         return bookingRepository.findAll();
@@ -51,7 +49,7 @@ public class BookingService {
         payment.setAmount(amount);
         payment.setPaymentDate(LocalDateTime.now());
         payment.setBooking(null); // Not associated with a booking, just rent payment
-        payment.setDescription("Book payment for property or an Appointment: " + property.getName());
+        payment.setDescription("Book payment for property or an Appointment: " + property.getType());
 
         return paymentRepository.save(payment);
     }

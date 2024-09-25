@@ -33,8 +33,10 @@ public class AdminService {
 
     public Admin createAdmin(Admin admin) {
         Users user = new Users();
-        user.setUsername(admin.getEmail());
-        user.setPassword(passwordEncoder.encode("defaultPassword")); // Default password should be changed later
+        user.setUsername(admin.getUsername());
+        user.setEmail(admin.getEmail());
+        user.setPassword(passwordEncoder.encode(admin.getPassword())); // Default password should be changed later
+       admin.setPassword(passwordEncoder.encode((admin.getPassword())));
         user.setRole("ADMIN");
         userRepository.save(user);
         admin.setUserAccount(user);
@@ -43,22 +45,24 @@ public class AdminService {
 
     public Agent createAgent(Agent agent) {
         Users user = new Users();
-        user.setUsername(agent.getEmail());
-        user.setPassword(passwordEncoder.encode("defaultPassword")); // Default password should be changed later
+        user.setUsername(agent.getUserName());
+        user.setEmail(agent.getEmail());
+        user.setPassword(passwordEncoder.encode(agent.getPassword())); // Default password should be changed later
+        agent.setPassword(passwordEncoder.encode(agent.getPassword()));
         user.setRole("AGENT");
         userRepository.save(user);
-
         agent.setUserAccount(user);
         return agentRepository.save(agent);
     }
 
     public Tenant createTenant(Tenant tenant) {
         Users user = new Users();
-        user.setUsername(tenant.getEmail());
-        user.setPassword(passwordEncoder.encode("defaultPassword")); // Default password should be changed later
+        user.setUsername(tenant.getUserName());
+        user.setEmail(tenant.getEmail());
+        user.setPassword(passwordEncoder.encode(tenant.getPassword())); // Default password should be changed later
+        tenant.setPassword(passwordEncoder.encode(tenant.getPassword()));
         user.setRole("TENANT");
         userRepository.save(user);
-
         tenant.setUserAccount(user);
         return tenantRepository.save(tenant);
     }
